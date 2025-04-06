@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudXR sample client config generator</title>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Components Web -->
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- トップアプリバー -->
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <span class="mdc-top-app-bar__title">CloudXR sample client config generator</span>
+      </section>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <!-- 参考URL -->
+    <div class="reference-container">
+      <p class="reference-text">
+        このツールは <a href="https://docs.nvidia.com/cloudxr-sdk/usr_guide/cmd_line_options.html#client-command-line-options"
+          target="_blank">NVIDIA CloudXR SDK ドキュメント</a> のクライアントコマンドラインオプションを参考に作成されています。
+      </p>
+    </div>
+
+    <!-- プラットフォーム選択 -->
+    <div class="platform-selector">
+      <h2 class="platform-selector-title">プラットフォーム選択</h2>
+      <div class="platform-radio-group">
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+            <input class="mdc-radio__native-control" type="radio" id="platform-all" name="platform" value="all" checked>
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+          </div>
+          <label for="platform-all">すべて</label>
+        </div>
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+            <input class="mdc-radio__native-control" type="radio" id="platform-windows" name="platform" value="windows">
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+          </div>
+          <label for="platform-windows">Windows</label>
+        </div>
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+            <input class="mdc-radio__native-control" type="radio" id="platform-linux" name="platform" value="linux">
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+          </div>
+          <label for="platform-linux">Linux</label>
+        </div>
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+            <input class="mdc-radio__native-control" type="radio" id="platform-android" name="platform" value="android">
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+          </div>
+          <label for="platform-android">Android</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- タブコンテナ -->
+    <div class="tab-container">
+      <div class="mdc-tab-bar" role="tablist">
+        <div class="mdc-tab-scroller">
+          <div class="mdc-tab-scroller__scroll-area">
+            <div class="mdc-tab-scroller__scroll-content">
+              <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0" id="tab-basic">
+                <span class="mdc-tab__content">
+                  <span class="mdc-tab__text-label">基本設定</span>
+                </span>
+                <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+                <span class="mdc-tab__ripple"></span>
+              </button>
+              <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1" id="tab-log">
+                <span class="mdc-tab__content">
+                  <span class="mdc-tab__text-label">ログ設定</span>
+                </span>
+                <span class="mdc-tab-indicator">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+                <span class="mdc-tab__ripple"></span>
+              </button>
+              <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1" id="tab-network">
+                <span class="mdc-tab__content">
+                  <span class="mdc-tab__text-label">ネットワーク設定</span>
+                </span>
+                <span class="mdc-tab-indicator">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+                <span class="mdc-tab__ripple"></span>
+              </button>
+              <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1" id="tab-audio">
+                <span class="mdc-tab__content">
+                  <span class="mdc-tab__text-label">オーディオ設定</span>
+                </span>
+                <span class="mdc-tab-indicator">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+                <span class="mdc-tab__ripple"></span>
+              </button>
+              <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1" id="tab-video">
+                <span class="mdc-tab__content">
+                  <span class="mdc-tab__text-label">ビデオ設定</span>
+                </span>
+                <span class="mdc-tab-indicator">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+                <span class="mdc-tab__ripple"></span>
+              </button>
+              <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1" id="tab-other">
+                <span class="mdc-tab__content">
+                  <span class="mdc-tab__text-label">その他</span>
+                </span>
+                <span class="mdc-tab-indicator">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+                <span class="mdc-tab__ripple"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- タブコンテンツ -->
+      <div class="tab-content" id="content-basic">
+        <div class="option-group">
+          <h3 class="option-group-title">サーバー接続</h3>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">サーバーIP <span class="option-abbr">(-s, -server)</span></div>
+              <div class="option-desc">接続するサーバーのIPアドレス</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-text-field mdc-text-field--outlined" data-option="-server">
+                <input class="mdc-text-field__input" type="text" id="server-ip">
+                <div class="mdc-notched-outline">
+                  <div class="mdc-notched-outline__leading"></div>
+                  <div class="mdc-notched-outline__notch">
+                    <label for="server-ip" class="mdc-floating-label">IPアドレス</label>
+                  </div>
+                  <div class="mdc-notched-outline__trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <h3 class="option-group-title">表示モード</h3>
+          <div class="option-item platform-specific" data-platform="windows linux">
+            <div class="option-label">
+              <div class="option-name">ウィンドウモード <span class="option-abbr">(-w, -windowed)</span>
+                <span class="platform-badge">Windows/Linux</span>
+              </div>
+              <div class="option-desc">デスクトップモードで実行する</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-windowed">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="windowed-mode" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="windowed-mode">有効</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content hidden" id="content-log">
+        <div class="option-group">
+          <h3 class="option-group-title">ログレベル</h3>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">詳細ログ <span class="option-abbr">(-v, -log-verbose)</span></div>
+              <div class="option-desc">より詳細なログを有効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-log-verbose">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="log-verbose" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="log-verbose">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">ログ無効化 <span class="option-abbr">(-q, -log-quiet)</span></div>
+              <div class="option-desc">ログを無効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-log-quiet">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="log-quiet" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="log-quiet">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">プライバシーフィルタリング無効化 <span class="option-abbr">(-p, -log-privacy-disable)</span>
+              </div>
+              <div class="option-desc">ログのプライバシーフィルタリングを無効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-log-privacy-disable">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="log-privacy-disable" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="log-privacy-disable">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">最大ログサイズ <span class="option-abbr">(-lmk N, -log-max-kb N)</span></div>
+              <div class="option-desc">最大ログサイズをキロバイト単位で指定（-1〜1000）</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-text-field mdc-text-field--outlined" data-option="-log-max-kb">
+                <input class="mdc-text-field__input" type="number" id="log-max-kb" min="-1" max="1000" value="-1">
+                <div class="mdc-notched-outline">
+                  <div class="mdc-notched-outline__leading"></div>
+                  <div class="mdc-notched-outline__notch">
+                    <label for="log-max-kb" class="mdc-floating-label">サイズ (KB)</label>
+                  </div>
+                  <div class="mdc-notched-outline__trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <h3 class="option-group-title">トレース設定</h3>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">ストリームイベントトレース <span class="option-abbr">(-t, -trace-stream-events)</span></div>
+              <div class="option-desc">ストリーミングイベントのトレースを有効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-trace-stream-events">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="trace-stream-events" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="trace-stream-events">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">ローカルイベントトレース <span class="option-abbr">(-tle, -trace-local-events)</span></div>
+              <div class="option-desc">ローカルイベントのトレースを有効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-trace-local-events">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="trace-local-events" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="trace-local-events">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">QoS統計トレース <span class="option-abbr">(-tqs, -trace-qos-stats)</span></div>
+              <div class="option-desc">QoS統計のトレースを有効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-trace-qos-stats">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="trace-qos-stats" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="trace-qos-stats">有効</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content hidden" id="content-network">
+        <div class="option-group">
+          <h3 class="option-group-title">ネットワーク設定</h3>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">クライアントネットワークインターフェース <span class="option-abbr">(-nic S, -network-interface-client
+                  S)</span></div>
+              <div class="option-desc">使用するクライアントネットワークインターフェースを指定</div>
+            </div>
+            <div class="option-input">
+              <div class="select-container" data-option="-network-interface-client">
+                <select id="network-interface-client" class="custom-select">
+                  <option value="">指定なし</option>
+                  <option value="ethernet">ethernet</option>
+                  <option value="wifi5ghz">wifi5ghz</option>
+                  <option value="wifi24ghz">wifi24ghz</option>
+                  <option value="mobilelte">mobilelte</option>
+                  <option value="mobile5g">mobile5g</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">ネットワークトポロジー <span class="option-abbr">(-nt S, -network-topology S)</span></div>
+              <div class="option-desc">使用するネットワークトポロジーを指定</div>
+            </div>
+            <div class="option-input">
+              <div class="select-container" data-option="-network-topology">
+                <select id="network-topology" class="custom-select">
+                  <option value="">指定なし</option>
+                  <option value="lan">lan</option>
+                  <option value="wan">wan</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">L4S輻輳制御 <span class="option-abbr">(-l4s, -enable-l4s)</span></div>
+              <div class="option-desc">L4S輻輳制御を有効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-enable-l4s">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="enable-l4s" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="enable-l4s">有効</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content hidden" id="content-audio">
+        <div class="option-group">
+          <h3 class="option-group-title">オーディオ設定</h3>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">オーディオ送信 <span class="option-abbr">(-sa, -enable-send-audio)</span></div>
+              <div class="option-desc">サーバーへのオーディオ送信を有効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-enable-send-audio">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="enable-send-audio" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="enable-send-audio">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">オーディオ受信無効化 <span class="option-abbr">(-dra, -disable-receive-audio)</span></div>
+              <div class="option-desc">サーバーからのオーディオ受信を無効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-disable-receive-audio">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="disable-receive-audio" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="disable-receive-audio">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">オーディオダンプ <span class="option-abbr">(-da, -dump-audio)</span></div>
+              <div class="option-desc">送受信オーディオをダンプする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-dump-audio">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="dump-audio" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="dump-audio">有効</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content hidden" id="content-video">
+        <div class="option-group">
+          <h3 class="option-group-title">ビデオ設定</h3>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">最大解像度係数 <span class="option-abbr">(-m N, -max-res-factor N)</span></div>
+              <div class="option-desc">最大ストリーム解像度係数（範囲：0.5-2.0）</div>
+            </div>
+            <div class="option-input">
+              <div class="select-container" data-option="-max-res-factor">
+                <select id="max-res-factor" class="custom-select">
+                  <option value="0.5">0.5</option>
+                  <option value="0.75">0.75</option>
+                  <option value="1.0" selected>1.0</option>
+                  <option value="1.25">1.25</option>
+                  <option value="1.5">1.5</option>
+                  <option value="1.75">1.75</option>
+                  <option value="2.0">2.0</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">ビデオストリーム数 <span class="option-abbr">(-ns N, -num-video-streams N)</span></div>
+              <div class="option-desc">ビデオストリーム数を指定(カスタムサーバー向け)</div>
+            </div>
+            <div class="option-input">
+              <div class="select-container" data-option="-num-video-streams">
+                <select id="num-video-streams" class="custom-select">
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">グラフィックスタイプ <span class="option-abbr">(-g S, -graphics-type S)</span></div>
+              <div class="option-desc">グラフィックスコンテキストタイプを選択</div>
+            </div>
+            <div class="option-input">
+              <div class="select-container" data-option="-graphics-type">
+                <select id="graphics-type" class="custom-select">
+                  <option value="">指定なし</option>
+                  <option value="gles">gles</option>
+                  <option value="cuda">cuda</option>
+                  <option value="d3d11">d3d11</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="option-item platform-specific" data-platform="windows linux">
+            <div class="option-label">
+              <div class="option-name">アルファチャンネル <span class="option-abbr">(-a, -enable-alpha)</span>
+                <span class="platform-badge">Windows/Linux</span>
+              </div>
+              <div class="option-desc">アルファチャンネルを有効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-enable-alpha">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="enable-alpha" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="enable-alpha">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">フォビエイテッドスケーリング <span class="option-abbr">(-f N, -foveation N)</span></div>
+              <div class="option-desc">フォビエイテッドスケーリングを有効にする（値：25-100）</div>
+            </div>
+            <div class="option-input">
+              <div class="select-container" data-option="-foveation">
+                <select id="foveation" class="custom-select">
+                  <option value="25">25</option>
+                  <option value="50" selected>50</option>
+                  <option value="75">75</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">画像ダンプ <span class="option-abbr">(-d, -dump-images)</span></div>
+              <div class="option-desc">ストリーミング画像をダンプする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-dump-images">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="dump-images" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="dump-images">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">クライアントビットストリームキャプチャ <span class="option-abbr">(-ccb,
+                  -capture-client-bitstream)</span></div>
+              <div class="option-desc">クライアント受信ビットストリームをキャプチャする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-capture-client-bitstream">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="capture-client-bitstream" class="mdc-switch__native-control"
+                      role="switch">
+                  </div>
+                </div>
+                <label for="capture-client-bitstream">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">サーバービットストリームキャプチャ <span class="option-abbr">(-csb,
+                  -capture-server-bitstream)</span></div>
+              <div class="option-desc">サーバー送信ビットストリームをキャプチャする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-capture-server-bitstream">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="capture-server-bitstream" class="mdc-switch__native-control"
+                      role="switch">
+                  </div>
+                </div>
+                <label for="capture-server-bitstream">有効</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content hidden" id="content-other">
+        <div class="option-group">
+          <h3 class="option-group-title">その他の設定</h3>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">ボタン再マッピング無効化 <span class="option-abbr">(-b, -no-button-remap)</span></div>
+              <div class="option-desc">ボタンの再マッピングを行わない</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-no-button-remap">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="no-button-remap" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="no-button-remap">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">レイテンシーテスト <span class="option-abbr">(-l, -latency-test)</span></div>
+              <div class="option-desc">ローカルレイテンシーテストを実行する</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-latency-test">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="latency-test" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="latency-test">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item platform-specific" data-platform="android">
+            <div class="option-label">
+              <div class="option-name">IRデコーダー無効化 <span class="option-abbr">(-ird, -disable-ir-decoder)</span>
+                <span class="platform-badge">Android</span>
+              </div>
+              <div class="option-desc">Almalence IRデコーダーを無効にする</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-disable-ir-decoder">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="disable-ir-decoder" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="disable-ir-decoder">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">フォールバックデコーダー <span class="option-abbr">(-fbd, -fallback-decoder)</span></div>
+              <div class="option-desc">フォールバックデコーダーを使用する</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-fallback-decoder">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="fallback-decoder" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="fallback-decoder">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">サーバー情報埋め込み <span class="option-abbr">(-esi, -embed-server-info)</span></div>
+              <div class="option-desc">サーバー情報を埋め込む</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-embed-server-info">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="embed-server-info" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="embed-server-info">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item platform-specific" data-platform="windows">
+            <div class="option-label">
+              <div class="option-name">クライアント情報埋め込み <span class="option-abbr">(-eci, -embed-client-info)</span>
+                <span class="platform-badge">Windows</span>
+              </div>
+              <div class="option-desc">クライアント情報を埋め込む</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-form-field">
+                <div class="mdc-switch" data-option="-embed-client-info">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__thumb-underlay">
+                    <div class="mdc-switch__thumb"></div>
+                    <div class="mdc-switch__ripple"></div>
+                    <input type="checkbox" id="embed-client-info" class="mdc-switch__native-control" role="switch">
+                  </div>
+                </div>
+                <label for="embed-client-info">有効</label>
+              </div>
+            </div>
+          </div>
+          <div class="option-item">
+            <div class="option-label">
+              <div class="option-name">ユーザーデータ <span class="option-abbr">(-u S, -user-data S)</span></div>
+              <div class="option-desc">ユーザー文字列をサーバーに送信</div>
+            </div>
+            <div class="option-input">
+              <div class="mdc-text-field mdc-text-field--outlined" data-option="-user-data">
+                <input class="mdc-text-field__input" type="text" id="user-data">
+                <div class="mdc-notched-outline">
+                  <div class="mdc-notched-outline__leading"></div>
+                  <div class="mdc-notched-outline__notch">
+                    <label for="user-data" class="mdc-floating-label">ユーザーデータ</label>
+                  </div>
+                  <div class="mdc-notched-outline__trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 出力エリア -->
+    <div class="output-container">
+      <h2 class="output-title">生成されたコマンドラインオプション</h2>
+      <div id="command-output" class="output-field"></div>
+      <div class="button-container">
+        <button id="copy-button" class="mdc-button mdc-button--raised">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">コピー</span>
+        </button>
+        <button id="download-button" class="mdc-button mdc-button--raised">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">ダウンロード</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- スナックバー -->
+    <div id="snackbar" class="snackbar"></div>
+  </div>
+
+  <!-- Custom JavaScript -->
+  <script src="script.js"></script>
+</body>
+
+</html>

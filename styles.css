@@ -1,0 +1,277 @@
+:root {
+  --mdc-theme-primary: #1976d2;
+  --mdc-theme-secondary: #03a9f4;
+  --mdc-theme-background: #f5f5f5;
+  --mdc-theme-surface: #ffffff;
+  --mdc-theme-on-primary: #ffffff;
+  --mdc-theme-on-secondary: #000000;
+  --mdc-theme-on-surface: #000000;
+  --accent-color: #bbdefb;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--mdc-theme-background);
+}
+
+.mdc-top-app-bar {
+  position: fixed;
+}
+
+.main-content {
+  padding: 80px 16px 16px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.reference-container {
+  margin: 0 0 16px 0;
+  padding: 12px 16px;
+  background-color: var(--mdc-theme-surface);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reference-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.reference-text a {
+  color: var(--mdc-theme-primary);
+  text-decoration: none;
+}
+
+.reference-text a:hover {
+  text-decoration: underline;
+}
+
+.platform-selector {
+  margin: 16px 0;
+  padding: 16px;
+  background-color: var(--mdc-theme-surface);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.platform-selector-title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.platform-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tab-container {
+  margin-top: 24px;
+}
+
+.tab-content {
+  padding: 24px;
+  background-color: var(--mdc-theme-surface);
+  border-radius: 0 4px 4px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.option-group {
+  margin-bottom: 24px;
+}
+
+.option-group-title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--mdc-theme-primary);
+  border-bottom: 1px solid var(--accent-color);
+  padding-bottom: 8px;
+}
+
+.option-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.option-item:hover {
+  background-color: rgba(187, 222, 251, 0.2);
+}
+
+.option-label {
+  flex: 1;
+  min-width: 200px;
+  margin-right: 16px;
+}
+
+.option-name {
+  font-weight: 500;
+}
+
+.option-abbr {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 8px;
+}
+
+.option-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+.option-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.select-container {
+  width: 100%;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: var(--mdc-theme-primary);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.platform-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-left: 8px;
+  background-color: var(--accent-color);
+  color: #333;
+}
+
+.output-container {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: var(--mdc-theme-surface);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.output-title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.output-field {
+  width: 100%;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-family: monospace;
+  margin-bottom: 16px;
+  min-height: 60px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.mdc-button {
+  margin: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* スナックバー */
+.snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.snackbar.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .option-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .option-label,
+  .option-input {
+    width: 100%;
+    min-width: auto;
+    margin-right: 0;
+  }
+
+  .option-input {
+    margin-top: 8px;
+  }
+
+}
